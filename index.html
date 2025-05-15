@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Famous Paintings Through History</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Famous Paintings Through History</h1>
+  </header>
+  <main id="gallery"></main>
+
+  <script>
+    fetch('paintings.json')
+      .then(response => response.json())
+      .then(data => {
+        const gallery = document.getElementById('gallery');
+        data.forEach(painting => {
+          const card = document.createElement('div');
+          card.className = 'card';
+
+          const img = document.createElement('img');
+          img.src = painting.image;
+          img.alt = painting.title;
+
+          const title = document.createElement('h2');
+          title.textContent = painting.title;
+
+          const artist = document.createElement('p');
+          artist.innerHTML = `<strong>Artist:</strong> ${painting.artist}`;
+
+          const year = document.createElement('p');
+          year.innerHTML = `<strong>Year:</strong> ${painting.year}`;
+
+          const medium = document.createElement('p');
+          medium.innerHTML = `<strong>Medium:</strong> ${painting.medium}`;
+
+          const dimensions = document.createElement('p');
+          dimensions.innerHTML = `<strong>Dimensions:</strong> ${painting.dimensions}`;
+
+          const location = document.createElement('p');
+          location.innerHTML = `<strong>Location:</strong> ${painting.location}`;
+
+          const description = document.createElement('p');
+          description.textContent = painting.description;
+
+          const source = document.createElement('a');
+          source.href = painting.source;
+          source.target = '_blank';
+          source.textContent = 'Learn more';
+
+          card.appendChild(img);
+          card.appendChild(title);
+          card.appendChild(artist);
+          card.appendChild(year);
+          card.appendChild(medium);
+          card.appendChild(dimensions);
+          card.appendChild(location);
+          card.appendChild(description);
+          card.appendChild(source);
+
+          gallery.appendChild(card);
+        });
+      })
+      .catch(error => {
+        console.error('Error loading JSON:', error);
+      });
+  </script>
+</body>
+</html>
